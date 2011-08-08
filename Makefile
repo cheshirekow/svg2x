@@ -1,4 +1,4 @@
-ALL=svg2pdf
+ALL=svg2pdf svg2eps
 
 MYCFLAGS=`pkg-config --cflags librsvg-2.0 cairo-pdf` -Wall -Wpointer-arith -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -Wnested-externs -fno-strict-aliasing
 MYLDFLAGS=`pkg-config --libs librsvg-2.0 cairo-pdf`
