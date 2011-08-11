@@ -27,6 +27,7 @@
  * Authors: Kristian Høgsberg <krh@redhat.com>
  *	    Carl Worth <cworth@redhat.com>
  *	    Behdad Esfahbod <besfahbo@redhat.com>
+ *	    Josh Biakowski <jbialk@mit.edu>
  */
 
 #include <stdio.h>
@@ -41,41 +42,67 @@
 
 #define PIXELS_PER_POINT 1
 
+
+/**
+ *  \brief  a simple program to convert svg files to eps files
+ */
 int main (int argc, char *argv[])
 {
-    GError *error = NULL;
-    RsvgHandle *handle;
-    RsvgDimensionData dim;
-    double width, height;
-    const char *filename = argv[1];
-    const char *output_filename = argv[2];
-    cairo_surface_t *surface;
-    cairo_t *cr;
-    cairo_status_t status;
+    GError *error = NULL;           ///< result of rsvg operations
+    RsvgHandle          *handle;    ///< handle to rsvg document
+    RsvgDimensionData   dim;        ///< dimension of the svg document
 
+    double      width, height;      ///< dimensions of the output document
+
+    const char *filename        = argv[1];  ///< input filename
+    const char *output_filename = argv[2];  ///< output filename
+
+    cairo_surface_t *surface;   ///< the cairo surface we draw to
+    cairo_t         *cr;        ///< the cairo context
+    cairo_status_t status;      ///< sotres the result of cairo operations
+
+    // if the user called the program with other than 2 arguments, we don't
+    // know what to do, so just pring usage
     if (argc != 3)
 	FAIL ("usage: svg2eps input_file.svg output_file.eps");
 
+    // initialize the glib object library
     g_type_init ();
 
+    // set the svg  defaultresolution
     rsvg_set_default_dpi (72.0);
+
+    // open the svg file and get an rsvg handle to the opened file
     handle = rsvg_handle_new_from_file (filename, &error);
+
+    // if we failed to open the file then print the error ad exit
     if (error != NULL)
-	FAIL (error->message);
+        FAIL (error->message);
 
+    // get the dimensions of the opened svg document
     rsvg_handle_get_dimensions (handle, &dim);
-    width = dim.width;
-    height = dim.height;
 
+    // copy out the dimensions
+    width   = dim.width;
+    height  = dim.height;
+
+    // create a post-script cairo surface to draw on
     surface = cairo_ps_surface_create (output_filename, width, height);
+
+    // create a cairo context with that surface
     cr = cairo_create (surface);
 
+    // tell rsvg to render the document into the cairo context
     rsvg_handle_render_cairo (handle, cr);
 
+    // check the status of the context, i.e. see if there were errors
     status = cairo_status (cr);
-    if (status)
-	FAIL (cairo_status_to_string (status));
 
+    // if there were errors then print them to the console and quit
+    if (status)
+        FAIL (cairo_status_to_string (status));
+
+    // clean up nicely
     cairo_destroy (cr);
     cairo_surface_destroy (surface);
 
