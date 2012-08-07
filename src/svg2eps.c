@@ -1,8 +1,9 @@
-/* gcc `pkg-config --cflags --libs librsvg-2.0 cairo-pdf` -o svg2pdf svg2pdf.c
+/* svg2eps  convert an svg image to an eps image
  *
- * Copyright © 2005 Red Hat, Inc.
- * Copyright © 2006 Red Hat, Inc.
- * Copyright © 2007 Red Hat, Inc.
+ * Copyright (c) 2005 Red Hat, Inc.
+ * Copyright (c) 2006 Red Hat, Inc.
+ * Copyright (c) 2007 Red Hat, Inc.
+ * Copyright (c) 2012 Josh Bialkowski
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -25,9 +26,11 @@
  * SOFTWARE.
  *
  * Authors: Kristian Høgsberg <krh@redhat.com>
- *	    Carl Worth <cworth@redhat.com>
- *	    Behdad Esfahbod <besfahbo@redhat.com>
- *	    Josh Biakowski <jbialk@mit.edu>
+ *	        Carl Worth <cworth@redhat.com>
+ *	        Behdad Esfahbod <besfahbo@redhat.com>
+ *	        Josh Biakowski <jbialk@mit.edu>
+ *
+ *  gcc `pkg-config --cflags --libs librsvg-2.0 cairo-pdf` -o svg2eps svg2eps.c
  */
 
 #include <stdio.h>
