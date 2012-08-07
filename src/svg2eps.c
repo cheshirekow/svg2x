@@ -51,18 +51,18 @@
  */
 int main (int argc, char *argv[])
 {
-    GError *error = NULL;           ///< result of rsvg operations
-    RsvgHandle          *handle;    ///< handle to rsvg document
-    RsvgDimensionData   dim;        ///< dimension of the svg document
+    GError *error = NULL;           //< result of rsvg operations
+    RsvgHandle          *handle;    //< handle to rsvg document
+    RsvgDimensionData   dim;        //< dimension of the svg document
 
-    double      width, height;      ///< dimensions of the output document
+    double      width, height;      //< dimensions of the output document
 
-    const char *filename        = argv[1];  ///< input filename
-    const char *output_filename = argv[2];  ///< output filename
+    const char *filename        = argv[1];  //< input filename
+    const char *output_filename = argv[2];  //< output filename
 
-    cairo_surface_t *surface;   ///< the cairo surface we draw to
-    cairo_t         *cr;        ///< the cairo context
-    cairo_status_t status;      ///< sotres the result of cairo operations
+    cairo_surface_t *surface;   //< the cairo surface we draw to
+    cairo_t         *cr;        //< the cairo context
+    cairo_status_t status;      //< sotres the result of cairo operations
 
     // if the user called the program with other than 2 arguments, we don't
     // know what to do, so just pring usage
